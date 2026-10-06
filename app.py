@@ -1,3 +1,4 @@
+import os
 import sqlite3
 import subprocess
 
@@ -19,3 +20,10 @@ def item():
     conn = sqlite3.connect('shop.db')
     rows = conn.execute(f"SELECT id, name FROM items WHERE name = '{name}'").fetchall()
     return {'items': rows}
+
+
+@app.route('/file')
+def read_file():
+    name = request.args.get('name', '')
+    with open(os.path.join('docs', name)) as fh:
+        return fh.read()
