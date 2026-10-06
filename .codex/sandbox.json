@@ -1,0 +1,5 @@
+{
+  "image": "python:3.12-slim",
+  "setup": "pip install --user -q -r requirements.txt pytest",
+  "test": "python3 -m pytest -q"
+}
