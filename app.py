@@ -2,7 +2,7 @@ import os
 import sqlite3
 import subprocess
 
-from flask import Flask, request
+from flask import Flask, abort, request
 
 app = Flask(__name__)
 
@@ -25,5 +25,9 @@ def item():
 @app.route('/file')
 def read_file():
     name = request.args.get('name', '')
-    with open(os.path.join('docs', name)) as fh:
+    docs_dir = os.path.realpath('docs')
+    path = os.path.realpath(os.path.join(docs_dir, name))
+    if os.path.commonpath([docs_dir, path]) != docs_dir:
+        abort(403)
+    with open(path) as fh:
         return fh.read()
