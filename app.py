@@ -18,7 +18,7 @@ def ping():
 def item():
     name = request.args.get('name', '')
     conn = sqlite3.connect('shop.db')
-    rows = conn.execute(f"SELECT id, name FROM items WHERE name = '{name}'").fetchall()
+    rows = conn.execute("SELECT id, name FROM items WHERE name = ?", (name,)).fetchall()
     return {'items': rows}
 
 
